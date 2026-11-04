@@ -1,0 +1,23 @@
+# Sexta 30/10 · Lumio
+
+## Concluído
+- Estruturação do banco de dados e elaboração dos modelos conceitual e lógico (Jethomy).
+- Desenvolvimento do design da aplicação no Figma, contemplando versões mobile e desktop (Igor).
+
+## Em andamento
+- Estudos e pesquisas sobre APIs para análise de viabilidade das integrações necessárias (William).
+- Implementação do backend, desenvolvimento do registro de usuários e criação das rotas de cadastro (Rafael).
+- Apoio ao desenvolvimento do backend (Igor).
+- Pesquisa de campo, aguardando retorno das informações coletadas (Rafael).
+- Validação das entidades e definição do escopo viável para a fase atual do projeto (Jethomy).
+
+## Travado
+- Retorno das informações da pesquisa de campo (Rafael).
+
+## Próxima semana
+- Implementação do módulo de acesso e gerenciamento de perfis (Rafael).
+- Adequação do sistema às diretrizes da LGPD (Equipe).
+- Desenvolvimento do módulo de gestão de vans e motoristas (Equipe).
+- Evolução e refinamento do protótipo no Figma (Igor).
+
+**Figma:** [Projeto Integrador - Lumio](https://www.figma.com/design/YklZ8NiIhgwh6Qd1facwef/Projeto-Integrador?node-id=3-3&t=tQWIYYY0yJ7xxY21-0)
