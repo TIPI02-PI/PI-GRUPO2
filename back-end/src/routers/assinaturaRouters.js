@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { autenticarUsuario } from "../middlewares/autenticarUsuario.js";
-import { exigirAssinaturaAtiva } from "../middlewares/exigirAssinaturaAtiva.js";
+import autenticar from "../middleware/autenticar.js";
+import exigirAssinaturaAtiva from "../middleware/exigirAssinaturaAtiva.js";
 import { consultarAssinatura, verificarAcesso } from "../controllers/assinaturaController.js";
 
 const router = Router();
 
-router.get("/status", autenticarUsuario, consultarAssinatura);
-router.get("/verificar-acesso", autenticarUsuario, exigirAssinaturaAtiva, verificarAcesso);
+router.get("/status", autenticar, consultarAssinatura);
+router.get("/verificar-acesso", autenticar, exigirAssinaturaAtiva, verificarAcesso);
 
 export default router;
