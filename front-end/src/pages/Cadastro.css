@@ -261,6 +261,22 @@ transition: background-color 0.2s ease;
 background-color: #f0f4f8;
 }
 
+.lumio-register__select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.lumio-register__select:focus {
+  border-color: #007bff; /* Ajuste para a cor padrão do Lumio */
+}
+
+
 /* Link para login */
 
 .lumio-register__login-redirect {

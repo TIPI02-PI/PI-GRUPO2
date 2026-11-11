@@ -3,9 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import "./Cadastro.css";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
+const API_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : "http://localhost:3000/api";
+
 
 const FORMULARIO_INICIAL = {
+  perfil: "responsavel",
   nome: "",
   email: "",
   senha: "",
@@ -124,6 +129,7 @@ const buscarCep = async (valor) => {
           nome: formData.nome.trim(),
           email: formData.email.trim(),
           senha: formData.senha,
+           tipo_usuario: formData.perfil,
           tipo_documento: "CPF",
           documento: formData.cpf.replace(/\D/g, ""),
         }),
@@ -280,6 +286,19 @@ const buscarCep = async (valor) => {
               {mensagem}
             </p>
           )}
+         <div className="lumio-register__field">
+  <label htmlFor="perfil">Quero me cadastrar como:</label>
+  <select
+    id="perfil"
+    value={formData.perfil}
+    onChange={handleChange}
+    className="lumio-register__select"
+    required
+  >
+    <option value="responsavel">👨‍👩‍👧‍👦 Responsável (Buscar transporte)</option>
+    <option value="motorista">🚌 Motorista / Transportador</option>
+  </select>
+</div>
 
           <div className="lumio-register__grid">
             <div className="lumio-register__column">
