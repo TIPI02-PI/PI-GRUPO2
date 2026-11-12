@@ -1,0 +1,138 @@
+.lumio-register {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background-color: #102a43;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #102a43;
+  position: relative;
+  overflow: hidden;
+}
+
+.lumio-register *,
+.lumio-register *::before,
+.lumio-register *::after {
+  box-sizing: border-box;
+}
+
+/* Card Principal */
+.lumio-register__card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 540px;
+  background-color: #d9e2ec;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Barra Amarela Superior */
+.lumio-register__top-bar {
+  height: 5px;
+  background-color: #f59e0b;
+  width: 100%;
+}
+
+/* Conteúdo centralizado */
+.lumio-register__content {
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.lumio-register__logo {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #102a43;
+  letter-spacing: -0.5px;
+}
+
+.lumio-register__step {
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #243b53;
+  letter-spacing: 0.8px;
+}
+
+.lumio-register__title {
+  margin: 16px 0 6px 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: #102a43;
+}
+
+.lumio-register__subtitle {
+  margin: 0 0 24px 0;
+  font-size: 13px;
+  color: #627d98;
+}
+
+/* Caixinha de Alerta Branca */
+.lumio-register__alert {
+  background-color: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.lumio-register__alert-border {
+  width: 5px;
+  background-color: #f59e0b;
+  flex-shrink: 0;
+}
+
+.lumio-register__alert-body {
+  padding: 16px 20px;
+}
+
+.lumio-register__alert-body h3 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #102a43;
+}
+
+.lumio-register__alert-body p {
+  margin: 0;
+  font-size: 12px;
+  color: #627d98;
+  line-height: 1.4;
+}
+
+/* Botão Amarelo Principal */
+.lumio-register__button {
+  width: 100%;
+  max-width: 320px;
+  padding: 13px;
+  background-color: #f59e0b;
+  color: #102a43;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+  margin-bottom: 24px;
+}
+
+.lumio-register__button:hover {
+  background-color: #d97706;
+}
+
+.lumio-register__footer-note {
+  margin: 0;
+  font-size: 11px;
+  color: #829ab1;
+}

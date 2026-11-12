@@ -254,8 +254,8 @@ export default function LoginScreen() {
           )}
 
           <p className="lumio-login__signup">
-            Não possui uma conta?{" "}
-            <Link to="/cadastro">Crie uma agora.</Link>
+            Precisa de acesso?{" "}
+            <Link to="/cadastro">Fale com a equipe.</Link>
           </p>
         </div>
 
