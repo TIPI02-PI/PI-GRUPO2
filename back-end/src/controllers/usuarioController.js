@@ -313,3 +313,68 @@ export async function redefinirSenha(req, res) {
         });
     }
 }
+
+export async function cadastrarEndereco(req, res) {
+    try {
+        const {
+            cep,
+            logradouro,
+            numero,
+            complemento,
+            bairro,
+            cidade,
+            estado,
+            latitude,
+            longitude
+        } = req.body;
+
+        if (!cep || !numero || !bairro || !cidade || !estado) {
+            return res.status(400).json({
+                mensagem: "CEP, número, bairro, cidade e estado são obrigatórios."
+            });
+        }
+
+        const [resultado] = await db.execute(
+            `
+            INSERT INTO enderecos
+            (
+                representante_id,
+                cep,
+                logradouro,
+                numero,
+                complemento,
+                bairro,
+                cidade,
+                estado,
+                latitude,
+                longitude
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `,
+            [
+                req.usuarios.id,
+                cep,
+                logradouro || null,
+                numero,
+                complemento || null,
+                bairro,
+                cidade,
+                estado,
+                latitude || null,
+                longitude || null
+            ]
+        );
+
+        return res.status(201).json({
+            mensagem: "Endereço cadastrado com sucesso.",
+            id: resultado.insertId
+        });
+
+    } catch (erro) {
+        console.error("Erro ao cadastrar endereço:", erro);
+
+        return res.status(500).json({
+            mensagem: "Erro interno do servidor."
+        });
+    }
+}
