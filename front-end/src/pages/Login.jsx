@@ -65,7 +65,7 @@ export default function LoginScreen() {
         JSON.stringify(dados.usuario)
       );
 
-      navigate("/dashboard", { replace: true });
+      navigate("/admin", { replace: true });
     } catch (error) {
       setErro(true);
 

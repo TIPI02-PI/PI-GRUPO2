@@ -565,4 +565,3 @@ ALTER TABLE enderecos ADD COLUMN logradouro VARCHAR(255) AFTER cep;
 
 
 select * from representante;
-
