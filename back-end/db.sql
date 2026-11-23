@@ -178,7 +178,7 @@ DROP TABLE IF EXISTS aluno;
 CREATE TABLE aluno (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
-    van_id INT NOT NULL,
+    van_id INT NULL,
     escola_id INT NOT NULL,
 
     nome VARCHAR(120) NOT NULL,
@@ -330,7 +330,9 @@ CREATE TABLE vinculo (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     representante_id INT NOT NULL,
-    auxiliar_id INT NOT NULL,
+    auxiliar_id INT NULL,
+    motorista_id INT NOT NULL,
+    FOREIGN KEY (motorista_id) REFERENCES motorista(id),
     aluno_id INT NOT NULL,
     van_id INT NOT NULL,
     escola_id INT NOT NULL,
@@ -391,6 +393,9 @@ CREATE TABLE contrato (
     vinculo_id INT NOT NULL,
 
     arquivo VARCHAR(500),
+    pdf MEDIUMBLOB NULL,
+    confirmado_responsavel_em DATETIME NULL,
+    confirmado_motorista_em DATETIME NULL,
 
     status ENUM(
         'aguardando_envio',
@@ -565,3 +570,12 @@ ALTER TABLE enderecos ADD COLUMN logradouro VARCHAR(255) AFTER cep;
 
 
 select * from representante;
+
+
+CREATE TABLE van_escola (
+    van_id INT NOT NULL,
+    escola_id INT NOT NULL,
+    PRIMARY KEY (van_id, escola_id),
+    FOREIGN KEY (van_id) REFERENCES van(id) ON DELETE CASCADE,
+    FOREIGN KEY (escola_id) REFERENCES escola(id) ON DELETE CASCADE
+);
