@@ -1,0 +1,420 @@
+/* src/pages/Documentos.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* === Cabeçalho da Página === */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.primaryDarkBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-navy-900);
+  color: var(--text-inverse);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.primaryDarkBtn:hover {
+  background-color: var(--color-navy-800);
+}
+
+/* === Layout de 3 Colunas === */
+.threeColGrid {
+  display: grid;
+  grid-template-columns: 300px 1fr 310px;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.panelCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panelTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.panelSubtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* === Coluna 1: Documentos Recebidos === */
+.docList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.docCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.docCard:hover {
+  background-color: var(--bg-surface);
+  border-color: var(--color-slate-500);
+}
+
+.docCardSelected {
+  background-color: var(--bg-surface);
+  border-color: var(--color-navy-900);
+  box-shadow: 0 0 0 1px var(--color-navy-900);
+}
+
+.docCardTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.docFileIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--color-navy-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.docName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.docOwner {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.docCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.docBadge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+}
+
+.badgePending {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+}
+
+.badgeApproved {
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+
+.docDate {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* === Coluna 2: Pré-visualização do Documento === */
+.previewToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.zoomControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast);
+}
+
+.iconBtn:hover {
+  border-color: var(--color-navy-900);
+}
+
+.previewCanvas {
+  flex: 1;
+  min-height: 380px;
+  background-color: var(--bg-subtle);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Folha simulada do documento */
+.documentSheet {
+  width: 100%;
+  max-width: 340px;
+  min-height: 330px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sheetHeader {
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.sheetTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-navy-900);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sheetBody {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.sheetPhotoPlaceholder {
+  width: 68px;
+  height: 84px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.sheetFields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sheetFieldRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sheetFieldLabel {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.sheetFieldValue {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sheetFooter {
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* === Coluna 3: Análise de Documento === */
+.statusPillWarning {
+  align-self: flex-start;
+  background-color: var(--color-amber-100);
+  color: var(--status-warning-text);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.checklistSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checklistLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.checkItem input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-navy-900);
+  cursor: pointer;
+}
+
+.notesField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.notesTextarea {
+  width: 100%;
+  min-height: 68px;
+  padding: 10px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  resize: vertical;
+  outline: none;
+}
+
+.notesTextarea:focus {
+  background-color: var(--bg-surface);
+  border-color: var(--border-focus);
+}
+
+.actionsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.approveBtn {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: #15803d;
+  color: var(--text-inverse);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: opacity var(--transition-fast);
+}
+
+.approveBtn:hover {
+  opacity: 0.92;
+}
+
+.revisionBtn {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: var(--color-amber-500);
+  color: var(--color-navy-900);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.revisionBtn:hover {
+  background-color: var(--color-amber-600);
+}
+
+/* === Responsividade === */
+@media (max-width: 1180px) {
+  .threeColGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

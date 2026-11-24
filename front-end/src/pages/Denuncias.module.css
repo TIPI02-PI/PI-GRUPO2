@@ -1,0 +1,268 @@
+/* src/pages/Denuncias.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* === Cabeçalho da Página === */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.primaryDarkBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-navy-900);
+  color: var(--text-inverse);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.primaryDarkBtn:hover {
+  background-color: var(--color-navy-800);
+}
+
+/* === Banner Escuro Superior (4 Métricas) === */
+.summaryBanner {
+  background-color: var(--color-navy-900);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.bannerStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.bannerStat:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.bannerValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-inverse);
+  line-height: 1.2;
+}
+
+.bannerValueHighlight {
+  color: var(--color-amber-500);
+}
+
+.bannerLabel {
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+/* === Quadro Kanban de 3 Colunas === */
+.kanbanGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.kanbanColumn {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-top-width: 3px;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  min-height: 420px;
+}
+
+/* Faixa superior de cada coluna */
+.colReceived {
+  border-top-color: var(--color-amber-500);
+}
+
+.colInProgress {
+  border-top-color: var(--color-navy-700);
+}
+
+.colResolved {
+  border-top-color: #15803d;
+}
+
+.columnHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.columnTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.columnCount {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.cardsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* === Card Individual de Ocorrência === */
+.incidentCard {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.incidentCard:hover {
+  background-color: var(--bg-surface);
+  border-color: var(--color-slate-500);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.incidentId {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.severityBadge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.severityHigh {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+
+.severityMedium {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+}
+
+.severityLow {
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+
+.incidentTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.incidentDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.cardActionBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-navy-900);
+  transition: color var(--transition-fast);
+}
+
+.cardActionBtn:hover {
+  color: var(--color-amber-600);
+}
+
+/* === Responsividade === */
+@media (max-width: 1100px) {
+  .kanbanGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .kanbanColumn {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .summaryBanner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bannerStat {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

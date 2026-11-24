@@ -1,72 +1,114 @@
+import styles from './Denuncias.module.css';
+
 export default function Denuncias() {
   return (
-    <>
-      <div className="page-header">
-        <div>
-          <h1>Denúncias e ocorrências</h1>
-          <p>Acompanhamento de relatos de segurança e conduta</p>
+    <div className={styles.container}>
+      {/* Cabeçalho */}
+      <div className={styles.pageHeader}>
+        <div className={styles.headerTitles}>
+          <h1 className={styles.pageTitle}>Denúncias e ocorrências</h1>
+          <p className={styles.pageSubtitle}>Acompanhamento de relatos de rota, atrasos e conduta</p>
         </div>
-        <button className="btn-primary">Exportar relatório</button>
+        <button className={styles.primaryDarkBtn}>+ Registrar ocorrência</button>
       </div>
 
-      {/* 4 Cards Escuros do Topo */}
-      <div className="kpi-grid">
-        <div className="card" style={{ background: "#0B213F", color: "#FFF" }}>
-          <span style={{ fontSize: "12px", color: "#94A3B8" }}>Total no Mês</span>
-          <h2 style={{ fontSize: "28px", marginTop: "4px" }}>24</h2>
+      {/* Banner Escuro Superior */}
+      <section className={styles.summaryBanner}>
+        <div className={styles.bannerStat}>
+          <strong className={styles.bannerValue}>04</strong>
+          <span className={styles.bannerLabel}>Recebidas hoje</span>
         </div>
-
-        <div className="card" style={{ background: "#0B213F", color: "#FFF" }}>
-          <span style={{ fontSize: "12px", color: "#94A3B8" }}>Recebidas</span>
-          <h2 style={{ fontSize: "28px", marginTop: "4px", color: "#F5A623" }}>08</h2>
+        <div className={styles.bannerStat}>
+          <strong className={`${styles.bannerValue} ${styles.bannerValueHighlight}`}>03</strong>
+          <span className={styles.bannerLabel}>Em análise</span>
         </div>
-
-        <div className="card" style={{ background: "#0B213F", color: "#FFF" }}>
-          <span style={{ fontSize: "12px", color: "#94A3B8" }}>Em Análise</span>
-          <h2 style={{ fontSize: "28px", marginTop: "4px" }}>05</h2>
+        <div className={styles.bannerStat}>
+          <strong className={styles.bannerValue}>12</strong>
+          <span className={styles.bannerLabel}>Resolvidas no mês</span>
         </div>
-
-        <div className="card" style={{ background: "#0B213F", color: "#FFF" }}>
-          <span style={{ fontSize: "12px", color: "#94A3B8" }}>Resolvidas</span>
-          <h2 style={{ fontSize: "28px", marginTop: "4px", color: "#4ADE80" }}>11</h2>
+        <div className={styles.bannerStat}>
+          <strong className={styles.bannerValue}>1h 20m</strong>
+          <span className={styles.bannerLabel}>Tempo médio de resposta</span>
         </div>
-      </div>
+      </section>
 
-      {/* 3 Colunas Kanban */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
-        <div className="card">
-          <h3 style={{ marginBottom: "12px", borderBottom: "2px solid #F5A623", paddingBottom: "8px" }}>
-            Recebidas
-          </h3>
-          <div style={{ background: "#F8FAFC", padding: "12px", borderRadius: "8px", border: "1px solid #E2E8F0" }}>
-            <span className="badge danger">Alta Prioridade</span>
-            <h4 style={{ margin: "8px 0 4px" }}>Atraso recorrente na rota</h4>
-            <p style={{ fontSize: "12px", color: "#64748B" }}>Relatado por: Ana Paula • Hoje, 08:15</p>
+      {/* Quadro Kanban */}
+      <section className={styles.kanbanGrid}>
+        {/* Coluna 1: Recebidas */}
+        <div className={`${styles.kanbanColumn} ${styles.colReceived}`}>
+          <div className={styles.columnHeader}>
+            <h2 className={styles.columnTitle}>Recebidas</h2>
+            <span className={styles.columnCount}>2</span>
+          </div>
+
+          <div className={styles.cardsStack}>
+            <article className={styles.incidentCard}>
+              <div className={styles.cardTop}>
+                <span className={styles.incidentId}>#OC-208</span>
+                <span className={`${styles.severityBadge} ${styles.severityHigh}`}>Alta</span>
+              </div>
+              <h3 className={styles.incidentTitle}>Atraso no embarque matinal</h3>
+              <p className={styles.incidentDesc}>
+                Responsável relatou atraso de 25 minutos na parada da Av. Paulista sem aviso prévio.
+              </p>
+              <div className={styles.cardFooter}>
+                <span>Van 02 • Há 18 min</span>
+                <button className={styles.cardActionBtn}>Iniciar análise →</button>
+              </div>
+            </article>
           </div>
         </div>
 
-        <div className="card">
-          <h3 style={{ marginBottom: "12px", borderBottom: "2px solid #2563EB", paddingBottom: "8px" }}>
-            Em análise
-          </h3>
-          <div style={{ background: "#F8FAFC", padding: "12px", borderRadius: "8px", border: "1px solid #E2E8F0" }}>
-            <span className="badge warning">Em verificação</span>
-            <h4 style={{ margin: "8px 0 4px" }}>Alteração de itinerário</h4>
-            <p style={{ fontSize: "12px", color: "#64748B" }}>Van 04 • Ontem</p>
+        {/* Coluna 2: Em análise */}
+        <div className={`${styles.kanbanColumn} ${styles.colInProgress}`}>
+          <div className={styles.columnHeader}>
+            <h2 className={styles.columnTitle}>Em análise</h2>
+            <span className={styles.columnCount}>1</span>
+          </div>
+
+          <div className={styles.cardsStack}>
+            <article className={styles.incidentCard}>
+              <div className={styles.cardTop}>
+                <span className={styles.incidentId}>#OC-205</span>
+                <span className={`${styles.severityBadge} ${styles.severityMedium}`}>Média</span>
+              </div>
+              <h3 className={styles.incidentTitle}>Desvio de trajeto reportado</h3>
+              <p className={styles.incidentDesc}>
+                Verificando logs de GPS da rota vespertina junto ao motorista Roberto Almeida.
+              </p>
+              <div className={styles.cardFooter}>
+                <span>Van 03 • Ontem</span>
+                <button className={styles.cardActionBtn}>Concluir →</button>
+              </div>
+            </article>
           </div>
         </div>
 
-        <div className="card">
-          <h3 style={{ marginBottom: "12px", borderBottom: "2px solid #16A34A", paddingBottom: "8px" }}>
-            Resolvidas
-          </h3>
-          <div style={{ background: "#F8FAFC", padding: "12px", borderRadius: "8px", border: "1px solid #E2E8F0" }}>
-            <span className="badge success">Concluído</span>
-            <h4 style={{ margin: "8px 0 4px" }}>Dúvida sobre cobrança</h4>
-            <p style={{ fontSize: "12px", color: "#64748B" }}>Resolvido em 16/11</p>
+        {/* Coluna 3: Resolvidas */}
+        <div className={`${styles.kanbanColumn} ${styles.colResolved}`}>
+          <div className={styles.columnHeader}>
+            <h2 className={styles.columnTitle}>Resolvidas</h2>
+            <span className={styles.columnCount}>1</span>
+          </div>
+
+          <div className={styles.cardsStack}>
+            <article className={styles.incidentCard}>
+              <div className={styles.cardTop}>
+                <span className={styles.incidentId}>#OC-199</span>
+                <span className={`${styles.severityBadge} ${styles.severityLow}`}>Concluída</span>
+              </div>
+              <h3 className={styles.incidentTitle}>Falha na notificação de chegada</h3>
+              <p className={styles.incidentDesc}>
+                Sincronização de push reativada para o responsável e validada no embarque seguinte.
+              </p>
+              <div className={styles.cardFooter}>
+                <span>Van 01 • 22/11</span>
+                <button className={styles.cardActionBtn}>Ver detalhes</button>
+              </div>
+            </article>
           </div>
         </div>
-      </div>
-    </>
+      </section>
+    </div>
   );
 }

@@ -17,11 +17,17 @@ export default function AdminLayout() {
           <NavLink to="/usuarios" className="nav-item">
             Usuários
           </NavLink>
+          <NavLink to="/motoristas" className="nav-item">
+            Motoristas
+          </NavLink>
           <NavLink to="/documentos" className="nav-item">
             Documentos
           </NavLink>
           <NavLink to="/denuncias" className="nav-item">
             Denúncias
+          </NavLink>
+          <NavLink to="/suporte" className="nav-item">
+            Suporte
           </NavLink>
           <NavLink to="/configuracoes" className="nav-item">
             Configurações
@@ -40,7 +46,6 @@ export default function AdminLayout() {
         </header>
 
         <main className="page-content">
-          {/* O React Router injeta a página atual aqui dentro */}
           <Outlet />
         </main>
       </div>

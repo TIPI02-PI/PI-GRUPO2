@@ -1,201 +1,119 @@
-* {
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* === Identidade Visual Lumio === */
+  --color-navy-900: #162133;       /* Sidebar, botões primários escuros, banner denúncias */
+  --color-navy-800: #1f2e47;       /* Hover de itens na sidebar */
+  --color-navy-700: #404d63;       /* Textos secundários escuros / ícones */
+  --color-slate-500: #7e8896;      /* Placeholders, legendas e metadados */
+
+  /* === Destaques e Ações === */
+  --color-amber-500: #f5a623;      /* Botão primário destaque, alertas, ativo na sidebar */
+  --color-amber-600: #d98e14;      /* Hover do botão amarelo */
+  --color-amber-100: #fef5e6;      /* Fundo suave de alerta / badge em análise */
+
+  /* === Superfícies e Bordas === */
+  --bg-app: #f4f6f9;               /* Fundo principal da área administrativa */
+  --bg-surface: #ffffff;           /* Fundo de cards, modais e painéis */
+  --bg-subtle: #f8fafc;            /* Fundo de inputs, cabeçalhos de tabela e sub-cards */
+  --border-color: #e2e8f0;         /* Borda padrão de cards e divisórias */
+  --border-focus: #162133;         /* Borda de input focado */
+
+  /* === Tipografia === */
+  --text-primary: #0f172a;         /* Títulos e textos principais */
+  --text-secondary: #475569;       /* Descrições e textos de apoio */
+  --text-muted: #94a3b8;           /* Textos desabilitados ou timestamps */
+  --text-inverse: #ffffff;         /* Texto sobre fundo escuro */
+
+  /* === Cores Semânticas (Badges e Status) === */
+  --status-success-bg: #dcfce7;
+  --status-success-text: #15803d;
+
+  --status-warning-bg: #fef3c7;
+  --status-warning-text: #b45309;
+
+  --status-danger-bg: #fee2e2;
+  --status-danger-text: #b91c1c;
+
+  --status-info-bg: #e0f2fe;
+  --status-info-text: #0369a1;
+
+  /* === Espaçamentos, Raios e Sombras === */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+  --transition-fast: 150ms ease;
+}
+
+/* === Reset Global === */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-body {
-  background-color: #F4F6F9;
-  color: #1E293B;
-}
-
-/* Estrutura Principal */
-.admin-container {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* Menu Lateral (Sidebar) */
-.sidebar {
-  width: 240px;
-  background-color: #0B213F;
-  color: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-
-.sidebar-logo {
-  background-color: #FFFFFF;
-  color: #0B213F;
-  padding: 20px;
-  text-align: center;
-  font-weight: 800;
-  font-size: 1.4rem;
-  border-bottom: 1px solid #E2E8F0;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  padding: 16px 12px;
-  gap: 6px;
-  flex: 1;
-}
-
-.nav-item {
-  color: #CBD5E1;
-  text-decoration: none;
-  padding: 12px 16px;
-  border-radius: 8px;
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
   font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: 0.2s;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-.nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #FFFFFF;
+/* === Elementos Base === */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
 }
 
-.nav-item.active {
-  background-color: #1D4ED8;
-  color: #FFFFFF;
-  font-weight: 600;
-  border-left: 4px solid #F5A623;
-}
-
-.sidebar-footer {
-  padding: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 12px;
-  color: #94A3B8;
-}
-
-/* Área Direita */
-.main-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.topbar {
-  height: 64px;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #E2E8F0;
-  padding: 0 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.page-content {
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* Cabeçalho da Página */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.page-header h1 {
-  font-size: 1.5rem;
-  color: #0B213F;
-}
-
-.page-header p {
-  font-size: 0.875rem;
-  color: #64748B;
-}
-
-/* Botões Padrão */
-.btn-primary {
-  background-color: #0B213F;
-  color: #FFFFFF;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
+button {
   cursor: pointer;
-}
-
-.btn-yellow {
-  background-color: #F5A623;
-  color: #0B213F;
   border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
+  background: none;
 }
 
-/* Cards de Indicadores (KPIs) */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.card {
-  background-color: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 20px;
+ul,
+ol {
+  list-style: none;
 }
 
-.kpi-card {
-  border-top: 4px solid #0B213F;
+/* === Scrollbar Discreta === */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.kpi-card.yellow {
-  border-top-color: #F5A623;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.kpi-title {
-  font-size: 0.8rem;
-  color: #64748B;
-  display: block;
-  margin-bottom: 8px;
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
 }
 
-.kpi-value {
-  font-size: 1.6rem;
-  color: #0B213F;
-  font-weight: 700;
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
-
-/* Grids de Conteúdo (2 Colunas como nas telas 02, 03, 04, 07, 08, 09) */
-.grid-2-cols {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
-
-/* Listas e Tabelas */
-.list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid #F1F5F9;
-}
-
-.badge {
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.badge.success { background: #DCFCE7; color: #166534; }
-.badge.warning { background: #FEF3C7; color: #92400E; }
-.badge.danger  { background: #FEE2E2; color: #991B1B; }

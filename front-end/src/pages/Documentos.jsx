@@ -1,134 +1,131 @@
+import { useState } from 'react';
+import styles from './Documentos.module.css';
+
 export default function Documentos() {
+  const [docSelecionado, setDocSelecionado] = useState(1);
+
   return (
-    <>
-      <div className="page-header">
-        <div>
-          <h1>Documentos</h1>
-          <p>Validação de CNH, antecedentes e licenciamento escolar</p>
+    <div className={styles.container}>
+      {/* Cabeçalho */}
+      <div className={styles.pageHeader}>
+        <div className={styles.headerTitles}>
+          <h1 className={styles.pageTitle}>Documentos</h1>
+          <p className={styles.pageSubtitle}>Validação de CNH, CRLV e autorizações de transporte escolar</p>
         </div>
-        <button className="btn-primary">Filtrar pendentes</button>
+        <button className={styles.primaryDarkBtn}>+ Solicitar documento</button>
       </div>
 
-      {/* Layout em 3 colunas */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1.5fr 1fr",
-          gap: "20px",
-        }}
-      >
-        {/* Coluna 1: Lista de documentos */}
-        <div className="card">
-          <h3 style={{ marginBottom: "12px" }}>Fila de validação</h3>
-
-          <div className="list-item">
+      {/* Grid de 3 Colunas */}
+      <div className={styles.threeColGrid}>
+        {/* Coluna 1: Fila de Documentos */}
+        <aside className={styles.panelCard}>
+          <div className={styles.panelHeader}>
             <div>
-              <strong>CNH Categoria D</strong>
-              <p style={{ fontSize: "12px", color: "#64748B" }}>
-                Carlos Mendes
-              </p>
+              <h2 className={styles.panelTitle}>Documentos recebidos</h2>
+              <p className={styles.panelSubtitle}>4 arquivos na fila</p>
             </div>
-            <span className="badge warning">Pendente</span>
           </div>
 
-          <div className="list-item">
-            <div>
-              <strong>CRLV 2026</strong>
-              <p style={{ fontSize: "12px", color: "#64748B" }}>
-                Fernanda Costa
-              </p>
+          <div className={styles.docList}>
+            <div
+              onClick={() => setDocSelecionado(1)}
+              className={`${styles.docCard} ${docSelecionado === 1 ? styles.docCardSelected : ''}`}
+            >
+              <div className={styles.docCardTop}>
+                <span className={styles.docFileIcon}>📄</span>
+                <div>
+                  <p className={styles.docName}>CNH Categoria D</p>
+                  <span className={styles.docOwner}>Carlos Eduardo • Van 01</span>
+                </div>
+              </div>
+              <div className={styles.docCardFooter}>
+                <span className={`${styles.docBadge} ${styles.badgePending}`}>Pendente</span>
+                <span className={styles.docDate}>Hoje, 10:15</span>
+              </div>
             </div>
-            <span className="badge success">Validado</span>
           </div>
-        </div>
+        </aside>
 
         {/* Coluna 2: Pré-visualização */}
-        <div className="card" style={{ textAlign: "center" }}>
-          <h3 style={{ marginBottom: "16px" }}>
-            Pré-visualização do documento
-          </h3>
-          <div
-            style={{
-              background: "#F1F5F9",
-              border: "2px dashed #CBD5E1",
-              borderRadius: "8px",
-              height: "240px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#64748B",
-            }}
-          >
-            [Imagem da CNH do Motorista]
+        <section className={styles.panelCard}>
+          <div className={styles.previewToolbar}>
+            <div>
+              <h2 className={styles.panelTitle}>Pré-visualização do documento</h2>
+              <p className={styles.panelSubtitle}>cnh_carlos_eduardo.pdf</p>
+            </div>
+            <div className={styles.zoomControls}>
+              <button className={styles.iconBtn} title="Diminuir zoom">-</button>
+              <button className={styles.iconBtn} title="Aumentar zoom">+</button>
+            </div>
           </div>
-        </div>
 
-        {/* Coluna 3: Painel de análise */}
-        <div
-          className="card"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <div>
-            <h3 style={{ marginBottom: "12px" }}>Análise</h3>
-            <p style={{ fontSize: "14px", marginBottom: "8px" }}>
-              <strong>Motorista:</strong> Carlos Mendes
-            </p>
-            <p style={{ fontSize: "14px", marginBottom: "16px" }}>
-              <strong>Validade:</strong> 10/08/2029
-            </p>
+          <div className={styles.previewCanvas}>
+            <div className={styles.documentSheet}>
+              <div className={styles.sheetHeader}>
+                <p className={styles.sheetTitle}>Carteira Nacional de Habilitação</p>
+              </div>
+              <div className={styles.sheetBody}>
+                <div className={styles.sheetPhotoPlaceholder}>Foto</div>
+                <div className={styles.sheetFields}>
+                  <div className={styles.sheetFieldRow}>
+                    <span className={styles.sheetFieldLabel}>Nome completo</span>
+                    <span className={styles.sheetFieldValue}>Carlos Eduardo Souza</span>
+                  </div>
+                  <div className={styles.sheetFieldRow}>
+                    <span className={styles.sheetFieldLabel}>Categoria / EAR</span>
+                    <span className={styles.sheetFieldValue}>D • Exerce Atividade Remunerada</span>
+                  </div>
+                  <div className={styles.sheetFieldRow}>
+                    <span className={styles.sheetFieldLabel}>Validade</span>
+                    <span className={styles.sheetFieldValue}>18/09/2029</span>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.sheetFooter}>
+                Documento digital verificado via QR Code
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Coluna 3: Análise e Aprovação */}
+        <aside className={styles.panelCard}>
+          <div className={styles.panelHeader}>
+            <h2 className={styles.panelTitle}>Análise de documento</h2>
+          </div>
+
+          <span className={styles.statusPillWarning}>Aguardando validação</span>
+
+          <div className={styles.checklistSection}>
+            <span className={styles.checklistLabel}>Critérios obrigatórios</span>
+            <label className={styles.checkItem}>
+              <input type="checkbox" defaultChecked />
+              <span>Documento legível e sem cortes</span>
+            </label>
+            <label className={styles.checkItem}>
+              <input type="checkbox" defaultChecked />
+              <span>Dentro do prazo de validade</span>
+            </label>
+            <label className={styles.checkItem}>
+              <input type="checkbox" />
+              <span>Observação EAR e curso escolar</span>
+            </label>
+          </div>
+
+          <div className={styles.notesField}>
+            <span className={styles.checklistLabel}>Observação interna</span>
             <textarea
-              placeholder="Observações..."
-              rows="4"
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "8px",
-                border: "1px solid #CBD5E1",
-              }}
-            ></textarea>
+              className={styles.notesTextarea}
+              placeholder="Adicione um comentário caso solicite revisão..."
+            />
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              marginTop: "16px",
-            }}
-          >
-            <button
-              style={{
-                background: "#16A34A",
-                color: "#FFF",
-                border: "none",
-                padding: "10px",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-            >
-              Aprovar Documento
-            </button>
-            <button
-              style={{
-                background: "#DC2626",
-                color: "#FFF",
-                border: "none",
-                padding: "10px",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-            >
-              Recusar
-            </button>
+          <div className={styles.actionsStack}>
+            <button className={styles.approveBtn}>Aprovar documento</button>
+            <button className={styles.revisionBtn}>Solicitar revisão</button>
           </div>
-        </div>
+        </aside>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,0 +1,388 @@
+/* src/pages/Usuarios.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+/* === Cabeçalho da Página === */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.primaryDarkBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-navy-900);
+  color: var(--text-inverse);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.primaryDarkBtn:hover {
+  background-color: var(--color-navy-800);
+}
+
+.primaryDarkBtn:active {
+  transform: translateY(1px);
+}
+
+/* === Barra de Abas / Filtros === */
+.tabsBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.tabBtn:hover {
+  border-color: var(--color-navy-700);
+  color: var(--text-primary);
+}
+
+.tabBtnActive {
+  background-color: var(--color-navy-900);
+  color: var(--text-inverse);
+  border-color: var(--color-navy-900);
+}
+
+/* === Grid Principal: Lista (2/3) + Detalhes do Perfil (1/3) === */
+.splitGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.panelCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.panelCount {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Campo de Busca */
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.searchInput::placeholder {
+  color: var(--color-slate-500);
+}
+
+.searchInput:focus {
+  background-color: var(--bg-surface);
+  border-color: var(--border-focus);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  color: var(--color-slate-500);
+  pointer-events: none;
+}
+
+/* Lista de Usuários */
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.userRow:hover {
+  border-color: var(--color-slate-500);
+  background-color: var(--bg-surface);
+}
+
+.userRowSelected {
+  background-color: var(--bg-surface);
+  border-color: var(--color-navy-900);
+  box-shadow: 0 0 0 1px var(--color-navy-900);
+}
+
+.userRowLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-navy-900);
+  color: var(--text-inverse);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.userRole {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Badges de Status */
+.badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badgeActive {
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+
+.badgePending {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+}
+
+.badgeBlocked {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+
+/* === Coluna Direita: Detalhes do Perfil Selecionado === */
+.profileCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.profileTopBadge {
+  align-self: center;
+  background-color: var(--color-amber-100);
+  color: var(--status-warning-text);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.profileAvatarLarge {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-subtle);
+  border: 2px solid var(--border-color);
+  color: var(--color-navy-900);
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileIdentity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profileName {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.profileMeta {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-color);
+}
+
+.permissionsSection {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.permissionsTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.permissionList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.permissionItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.checkIcon {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.profileActionBtn {
+  width: 100%;
+  padding: 11px 16px;
+  background-color: var(--color-navy-900);
+  color: var(--text-inverse);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  margin-top: 4px;
+  transition: background-color var(--transition-fast);
+}
+
+.profileActionBtn:hover {
+  background-color: var(--color-navy-800);
+}
+
+/* === Responsividade === */
+@media (max-width: 1024px) {
+  .splitGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

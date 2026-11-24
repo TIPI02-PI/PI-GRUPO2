@@ -1,77 +1,94 @@
+import styles from './VisaoGeral.module.css';
+
 export default function VisaoGeral() {
   return (
-    <>
-      <div className="page-header">
-        <div>
-          <h1>Visão geral</h1>
-          <p>Resumo operacional da plataforma Lumio</p>
+    <div className={styles.container}>
+      {/* Cabeçalho */}
+      <div className={styles.pageHeader}>
+        <div className={styles.headerTitles}>
+          <h1 className={styles.pageTitle}>Visão geral</h1>
+          <p className={styles.pageSubtitle}>Resumo operacional da plataforma Lumio</p>
         </div>
-        <button className="btn-yellow">Atualizar dados</button>
+        <button className={styles.primaryActionBtn}>
+          + Novo registro
+        </button>
       </div>
 
-      {/* 5 Cards do Topo */}
-      <div className="kpi-grid">
-        <div className="card kpi-card">
-          <span className="kpi-title">Total de Usuários</span>
-          <strong className="kpi-value">1.482</strong>
+      {/* 4 KPIs */}
+      <section className={styles.kpiGrid}>
+        <div className={styles.kpiCard}>
+          <div className={styles.kpiHeader}>
+            <span className={styles.kpiLabel}>Vans ativas</span>
+            <span className={styles.kpiIcon}>🚐</span>
+          </div>
+          <strong className={styles.kpiValue}>24</strong>
+          <span className={styles.kpiTrend}>+2 esta semana</span>
         </div>
-        <div className="card kpi-card yellow">
-          <span className="kpi-title">Motoristas Ativos</span>
-          <strong className="kpi-value">312</strong>
-        </div>
-        <div className="card kpi-card">
-          <span className="kpi-title">Docs Pendentes</span>
-          <strong className="kpi-value">28</strong>
-        </div>
-        <div className="card kpi-card yellow">
-          <span className="kpi-title">Denúncias Abertas</span>
-          <strong className="kpi-value">9</strong>
-        </div>
-        <div className="card kpi-card">
-          <span className="kpi-title">Vans em Rota</span>
-          <strong className="kpi-value">184</strong>
-        </div>
-      </div>
+        {/* Repita os outros 3 cards aqui */}
+      </section>
 
-      {/* Duas Colunas Inferiores */}
-      <div className="grid-2-cols">
-        <div className="card">
-          <h3>Fila de análise</h3>
-          <div className="list-item">
+      {/* Fila de Análise + Acesso Rápido */}
+      <section className={styles.middleGrid}>
+        <div className={styles.panelCard}>
+          <div className={styles.panelHeader}>
             <div>
-              <strong>Carlos Mendes</strong>
-              <p style={{ fontSize: "13px", color: "#64748B" }}>CNH e Documento do Veículo</p>
+              <h2 className={styles.panelTitle}>Fila de análise</h2>
+              <p className={styles.panelSubtitle}>Itens aguardando validação administrativa</p>
             </div>
-            <span className="badge warning">Pendente</span>
           </div>
-          <div className="list-item">
-            <div>
-              <strong>Fernanda Costa</strong>
-              <p style={{ fontSize: "13px", color: "#64748B" }}>Comprovante de Residência</p>
+
+          <div className={styles.queueList}>
+            <div className={styles.queueItem}>
+              <div className={styles.queueItemInfo}>
+                <span className={styles.queueIndicator} />
+                <div>
+                  <p className={styles.queueItemTitle}>CNH Motorista - Carlos Eduardo</p>
+                  <span className={styles.queueItemMeta}>Enviado há 15 min • Documentação</span>
+                </div>
+              </div>
+              <button className={styles.queueActionBtn}>Analisar</button>
             </div>
-            <span className="badge warning">Pendente</span>
-          </div>
-          <div className="list-item">
-            <div>
-              <strong>Roberto Alves</strong>
-              <p style={{ fontSize: "13px", color: "#64748B" }}>Vistoria Escolar</p>
-            </div>
-            <span className="badge success">Aprovado</span>
           </div>
         </div>
 
-        <div className="card">
-          <h3>Alertas rápidos</h3>
-          <div className="list-item">
-            <span>3 documentos vencem hoje</span>
-            <span className="badge danger">Urgente</span>
+        <div className={styles.panelCard}>
+          <div className={styles.panelHeader}>
+            <div>
+              <h2 className={styles.panelTitle}>Acesso rápido</h2>
+              <p className={styles.panelSubtitle}>Atalhos frequentes</p>
+            </div>
           </div>
-          <div className="list-item">
-            <span>Nova denúncia registrada</span>
-            <span className="badge warning">Atenção</span>
+
+          <div className={styles.quickAccessList}>
+            <button className={styles.quickAccessItem}>
+              <div className={styles.quickAccessLeft}>
+                <span className={styles.quickAccessIcon}>📄</span>
+                <div>
+                  <p className={styles.quickAccessTitle}>Validar documentos</p>
+                  <span className={styles.quickAccessDesc}>4 pendentes</span>
+                </div>
+              </div>
+              <span>→</span>
+            </button>
           </div>
         </div>
-      </div>
-    </>
+      </section>
+
+      {/* Atividades Recentes */}
+      <section className={styles.panelCard}>
+        <div className={styles.panelHeader}>
+          <h2 className={styles.panelTitle}>Atividades recentes</h2>
+        </div>
+        <div className={styles.activitiesList}>
+          <div className={styles.activityRow}>
+            <div className={styles.activityLeft}>
+              <span className={styles.activityDot} />
+              <span className={styles.activityText}>Documento aprovado para Van 02</span>
+            </div>
+            <span className={styles.activityTime}>Há 10 min</span>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

@@ -1,92 +1,101 @@
+import { useState } from 'react';
+import styles from './Usuarios.module.css';
+
 export default function Usuarios() {
+  const [abaAtiva, setAbaAtiva] = useState('Todos');
+  const [selecionadoId, setSelecionadoId] = useState(1);
+
   return (
-    <>
-      <div className="page-header">
-        <div>
-          <h1>Usuários e perfis</h1>
-          <p>Gerencie passageiros, responsáveis e permissões</p>
+    <div className={styles.container}>
+      {/* Cabeçalho */}
+      <div className={styles.pageHeader}>
+        <div className={styles.headerTitles}>
+          <h1 className={styles.pageTitle}>Usuários e perfis</h1>
+          <p className={styles.pageSubtitle}>Gerencie responsáveis, motoristas e estudantes cadastrados</p>
         </div>
-        <button className="btn-primary">+ Novo usuário</button>
+        <button className={styles.primaryDarkBtn}>+ Novo usuário</button>
       </div>
 
-      <div className="grid-2-cols">
-        {/* Lista à esquerda */}
-        <div className="card">
-          <input
-            type="text"
-            placeholder="Buscar por nome ou e-mail..."
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginBottom: "16px",
-              borderRadius: "8px",
-              border: "1px solid #CBD5E1",
-            }}
-          />
-
-          <div className="list-item">
-            <div>
-              <strong>Mariana Silva</strong>
-              <p style={{ fontSize: "13px", color: "#64748B" }}>
-                Responsável • mariana@email.com
-              </p>
-            </div>
-            <span className="badge success">Ativo</span>
-          </div>
-
-          <div className="list-item">
-            <div>
-              <strong>João Pedro</strong>
-              <p style={{ fontSize: "13px", color: "#64748B" }}>
-                Passageiro • joao@email.com
-              </p>
-            </div>
-            <span className="badge warning">Pendente</span>
-          </div>
-        </div>
-
-        {/* Detalhe do Perfil à direita */}
-        <div className="card" style={{ textAlign: "center" }}>
-          <div
-            style={{
-              width: "64px",
-              height: "64px",
-              borderRadius: "50%",
-              background: "#0B213F",
-              color: "#FFF",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto 12px",
-              fontSize: "20px",
-              fontWeight: "bold",
-            }}
+      {/* Filtros / Abas */}
+      <div className={styles.tabsBar}>
+        {['Todos', 'Responsáveis', 'Motoristas', 'Alunos'].map((aba) => (
+          <button
+            key={aba}
+            onClick={() => setAbaAtiva(aba)}
+            className={`${styles.tabBtn} ${abaAtiva === aba ? styles.tabBtnActive : ''}`}
           >
-            MS
-          </div>
-          <h3>Mariana Silva</h3>
-          <p style={{ color: "#64748B", fontSize: "14px", marginBottom: "16px" }}>
-            mariana@email.com
-          </p>
-
-          <div
-            style={{
-              textAlign: "left",
-              borderTop: "1px solid #E2E8F0",
-              paddingTop: "16px",
-              marginBottom: "16px",
-            }}
-          >
-            <p><strong>Telefone:</strong> (11) 99999-0000</p>
-            <p><strong>Perfil:</strong> Responsável</p>
-            <p><strong>Cadastro:</strong> 12/10/2026</p>
-          </div>
-
-          <button className="btn-primary" style={{ width: "100%" }}>
-            Editar Perfil
+            {aba}
           </button>
-        </div>
+        ))}
       </div>
-    </>
+
+      {/* Conteúdo Dividido */}
+      <div className={styles.splitGrid}>
+        {/* Lista Esquerda */}
+        <section className={styles.panelCard}>
+          <div className={styles.panelHeader}>
+            <h2 className={styles.panelTitle}>Lista de usuários</h2>
+            <span className={styles.panelCount}>4 resultados</span>
+          </div>
+
+          <div className={styles.searchWrapper}>
+            <span className={styles.searchIcon}>🔍</span>
+            <input
+              type="text"
+              placeholder="Buscar por nome, e-mail ou CPF..."
+              className={styles.searchInput}
+            />
+          </div>
+
+          <div className={styles.userList}>
+            <div
+              onClick={() => setSelecionadoId(1)}
+              className={`${styles.userRow} ${selecionadoId === 1 ? styles.userRowSelected : ''}`}
+            >
+              <div className={styles.userRowLeft}>
+                <div className={styles.avatar}>MS</div>
+                <div className={styles.userInfo}>
+                  <span className={styles.userName}>Mariana Silva</span>
+                  <span className={styles.userRole}>Responsável • 2 alunos vinculados</span>
+                </div>
+              </div>
+              <span className={`${styles.badge} ${styles.badgeActive}`}>Ativo</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Card de Detalhes Direita */}
+        <aside className={styles.profileCard}>
+          <span className={styles.profileTopBadge}>Perfil selecionado</span>
+          <div className={styles.profileAvatarLarge}>MS</div>
+          <div className={styles.profileIdentity}>
+            <h3 className={styles.profileName}>Mariana Silva</h3>
+            <p className={styles.profileMeta}>mariana.silva@email.com • São Paulo, SP</p>
+          </div>
+
+          <div className={styles.divider} />
+
+          <div className={styles.permissionsSection}>
+            <span className={styles.permissionsTitle}>Permissões e status</span>
+            <ul className={styles.permissionList}>
+              <li className={styles.permissionItem}>
+                <span className={styles.checkIcon}>✓</span>
+                <span>Cadastro verificado</span>
+              </li>
+              <li className={styles.permissionItem}>
+                <span className={styles.checkIcon}>✓</span>
+                <span>Notificações de embarque ativas</span>
+              </li>
+              <li className={styles.permissionItem}>
+                <span className={styles.checkIcon}>✓</span>
+                <span>Contrato vigente</span>
+              </li>
+            </ul>
+          </div>
+
+          <button className={styles.profileActionBtn}>Gerenciar perfil</button>
+        </aside>
+      </div>
+    </div>
   );
 }

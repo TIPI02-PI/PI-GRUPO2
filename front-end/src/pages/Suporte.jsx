@@ -1,110 +1,107 @@
+import { useState } from 'react';
+import styles from './Suporte.module.css';
+
 export default function Suporte() {
+  const [ticketAtivo, setTicketAtivo] = useState(1);
+  const [mensagem, setMensagem] = useState('');
+
   return (
-    <>
-      <div className="page-header">
-        <div>
-          <h1>Central de suporte</h1>
-          <p>Atendimento direto aos usuários e motoristas</p>
+    <div className={styles.container}>
+      {/* Cabeçalho */}
+      <div className={styles.pageHeader}>
+        <div className={styles.headerTitles}>
+          <h1 className={styles.pageTitle}>Central de suporte</h1>
+          <p className={styles.pageSubtitle}>Atendimento a responsáveis, motoristas e escolas</p>
         </div>
-        <button className="btn-primary">Novo chamado</button>
+        <button className={styles.primaryDarkBtn}>+ Novo chamado</button>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-          gap: "20px",
-          minHeight: "420px",
-        }}
-      >
-        <div className="card">
-          <h3 style={{ marginBottom: "12px" }}>Caixa de entrada</h3>
-          <div
-            className="list-item"
-            style={{ background: "#EFF6FF", padding: "12px", borderRadius: "8px" }}
+      {/* Área Dividida */}
+      <div className={styles.chatLayout}>
+        {/* Caixa de Entrada */}
+        <aside className={styles.inboxPanel}>
+          <div className={styles.inboxHeader}>
+            <h2 className={styles.inboxTitle}>Caixa de entrada</h2>
+            <span className={styles.inboxBadge}>4 abertos</span>
+          </div>
+
+          <input
+            type="text"
+            placeholder="Buscar chamado ou usuário..."
+            className={styles.searchInput}
+          />
+
+          <div className={styles.ticketList}>
+            <div
+              onClick={() => setTicketAtivo(1)}
+              className={`${styles.ticketCard} ${ticketAtivo === 1 ? styles.ticketCardActive : ''}`}
+            >
+              <div className={styles.ticketTop}>
+                <div className={styles.ticketUser}>
+                  <span className={styles.ticketAvatar}>AL</span>
+                  <span>Ana Luiza</span>
+                </div>
+                <span className={styles.ticketTime}>14:20</span>
+              </div>
+              <p className={styles.ticketSubject}>Alteração de ponto de embarque</p>
+              <p className={styles.ticketPreview}>Preciso atualizar o endereço de busca para amanhã...</p>
+              <span className={`${styles.statusTag} ${styles.statusOpen}`}>Em atendimento</span>
+            </div>
+          </div>
+        </aside>
+
+        {/* Janela do Chat */}
+        <section className={styles.chatPanel}>
+          <div className={styles.chatHeader}>
+            <div className={styles.chatUserInfo}>
+              <div className={styles.chatAvatar}>AL</div>
+              <div>
+                <h3 className={styles.chatTitle}>Alteração de ponto de embarque</h3>
+                <p className={styles.chatMeta}>Chamado #1042 • Ana Luiza (Responsável)</p>
+              </div>
+            </div>
+            <button className={styles.resolveBtn}>Marcar como resolvido</button>
+          </div>
+
+          <div className={styles.messagesArea}>
+            <div className={`${styles.messageGroup} ${styles.messageIncoming}`}>
+              <div className={`${styles.bubble} ${styles.bubbleIncoming}`}>
+                Olá! Preciso atualizar o endereço de embarque do meu filho para amanhã.
+              </div>
+              <span className={styles.messageTime}>Ana Luiza • 14:20</span>
+            </div>
+
+            <div className={`${styles.messageGroup} ${styles.messageOutgoing}`}>
+              <div className={`${styles.bubble} ${styles.bubbleOutgoing}`}>
+                Olá, Ana! Já localizei o cadastro da Van 02. Qual será o novo endereço?
+              </div>
+              <span className={styles.messageTime}>Suporte Lumio • 14:22</span>
+            </div>
+
+            <div className={styles.systemNote}>
+              <span className={styles.systemNoteTitle}>Nota operacional</span>
+              <span>O motorista Carlos Eduardo será notificado automaticamente após a alteração da rota.</span>
+            </div>
+          </div>
+
+          <form
+            className={styles.chatInputBar}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setMensagem('');
+            }}
           >
-            <div>
-              <strong>Lucas Martins</strong>
-              <p style={{ fontSize: "12px", color: "#64748B" }}>
-                Não consigo atualizar minha CNH
-              </p>
-            </div>
-            <span className="badge warning">Aberto</span>
-          </div>
-          <div className="list-item">
-            <div>
-              <strong>Juliana Rocha</strong>
-              <p style={{ fontSize: "12px", color: "#64748B" }}>
-                Como cadastrar segundo filho?
-              </p>
-            </div>
-            <span className="badge success">Respondido</span>
-          </div>
-        </div>
-
-        <div
-          className="card"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <div>
-            <div
-              style={{
-                borderBottom: "1px solid #E2E8F0",
-                paddingBottom: "12px",
-                marginBottom: "16px",
-              }}
-            >
-              <strong>Lucas Martins</strong> •{" "}
-              <span style={{ fontSize: "13px", color: "#64748B" }}>
-                Chamado #1042
-              </span>
-            </div>
-
-            <div
-              style={{
-                background: "#F1F5F9",
-                padding: "12px",
-                borderRadius: "8px",
-                marginBottom: "12px",
-                maxWidth: "80%",
-              }}
-            >
-              Olá, enviei a foto da minha nova CNH mas o aplicativo deu erro ao salvar.
-            </div>
-
-            <div
-              style={{
-                background: "#0B213F",
-                color: "#FFF",
-                padding: "12px",
-                borderRadius: "8px",
-                marginLeft: "auto",
-                maxWidth: "80%",
-              }}
-            >
-              Olá Lucas! Já liberamos o envio manual no seu perfil. Pode tentar novamente?
-            </div>
-          </div>
-
-          <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
             <input
               type="text"
-              placeholder="Digite sua resposta..."
-              style={{
-                flex: 1,
-                padding: "10px",
-                borderRadius: "8px",
-                border: "1px solid #CBD5E1",
-              }}
+              value={mensagem}
+              onChange={(e) => setMensagem(e.target.value)}
+              placeholder="Escreva sua resposta..."
+              className={styles.messageInput}
             />
-            <button className="btn-yellow">Enviar</button>
-          </div>
-        </div>
+            <button type="submit" className={styles.sendBtn}>Enviar</button>
+          </form>
+        </section>
       </div>
-    </>
+    </div>
   );
 }

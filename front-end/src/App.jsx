@@ -13,10 +13,8 @@ import Monitoramento from "./pages/Monitoramento";
 function App() {
   return (
     <Routes>
-      {/* Abre direto na Visão Geral */}
       <Route path="/" element={<Navigate to="/visao-geral" replace />} />
 
-      {/* Todas as telas internas */}
       <Route element={<AdminLayout />}>
         <Route path="/visao-geral" element={<VisaoGeral />} />
         <Route path="/usuarios" element={<Usuarios />} />
