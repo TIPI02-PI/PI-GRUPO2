@@ -178,7 +178,7 @@ DROP TABLE IF EXISTS aluno;
 CREATE TABLE aluno (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
-    van_id INT NOT NULL,
+    van_id INT NULL,
     escola_id INT NOT NULL,
 
     nome VARCHAR(120) NOT NULL,
@@ -298,6 +298,7 @@ CREATE TABLE enderecos (
     representante_id INT NOT NULL,
 
     cep VARCHAR(9) NOT NULL,
+    logradouro VARCHAR(255),
     numero VARCHAR(20) NOT NULL,
     complemento VARCHAR(100),
 
@@ -330,7 +331,8 @@ CREATE TABLE vinculo (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
     representante_id INT NOT NULL,
-    auxiliar_id INT NOT NULL,
+    motorista_id INT NOT NULL,
+    auxiliar_id INT NULL,
     aluno_id INT NOT NULL,
     van_id INT NOT NULL,
     escola_id INT NOT NULL,
@@ -365,6 +367,10 @@ CREATE TABLE vinculo (
         FOREIGN KEY (auxiliar_id)
         REFERENCES auxiliar(id),
 
+    CONSTRAINT fk_vinculo_motorista
+        FOREIGN KEY (motorista_id)
+        REFERENCES motorista(id),
+
     CONSTRAINT fk_vinculo_representante
         FOREIGN KEY (representante_id)
         REFERENCES representante(id),
@@ -391,6 +397,7 @@ CREATE TABLE contrato (
     vinculo_id INT NOT NULL,
 
     arquivo VARCHAR(500),
+    pdf MEDIUMBLOB NULL,
 
     status ENUM(
         'aguardando_envio',
@@ -402,6 +409,9 @@ CREATE TABLE contrato (
 
     data_envio DATETIME,
     data_confirmacao DATETIME,
+
+    confirmado_responsavel_em DATETIME NULL,
+    confirmado_motorista_em DATETIME NULL,
 
     data_inicio DATE,
     data_fim DATE,
@@ -561,7 +571,84 @@ CREATE TABLE viagem_aluno (
 );
 
 
-ALTER TABLE enderecos ADD COLUMN logradouro VARCHAR(255) AFTER cep;
+-- ============================================================
+-- ESCOLAS DA VAN
+-- ============================================================
+
+DROP TABLE IF EXISTS van_escola;
+
+CREATE TABLE van_escola (
+    van_id INT NOT NULL,
+    escola_id INT NOT NULL,
+
+    PRIMARY KEY (van_id, escola_id),
+
+    CONSTRAINT fk_van_escola_van
+        FOREIGN KEY (van_id)
+        REFERENCES van(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_van_escola_escola
+        FOREIGN KEY (escola_id)
+        REFERENCES escola(id)
+        ON DELETE CASCADE
+);
 
 
-select * from representante;
+-- ============================================================
+-- ASSINATURAS DO MOTORISTA
+-- ============================================================
+
+DROP TABLE IF EXISTS assinaturas_motorista;
+
+CREATE TABLE assinaturas_motorista (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    motorista_id INT NOT NULL,
+
+    status ENUM(
+        'pendente',
+        'ativa',
+        'cancelada'
+    ) NOT NULL DEFAULT 'pendente',
+
+    data_inicio DATETIME NOT NULL,
+    data_fim DATETIME NOT NULL,
+
+    pagamento_confirmado_em DATETIME,
+
+    criada_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_assinatura_motorista
+        FOREIGN KEY (motorista_id)
+        REFERENCES motorista(id)
+        ON DELETE CASCADE
+);
+
+
+-- ============================================================
+-- RECUPERAÇÃO DE SENHA
+-- ============================================================
+
+DROP TABLE IF EXISTS recuperacao_senha;
+
+CREATE TABLE recuperacao_senha (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    representante_id INT NOT NULL,
+
+    token VARCHAR(255) NOT NULL UNIQUE,
+
+    expira_em DATETIME NOT NULL,
+    usado_em DATETIME,
+
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_recuperacao_senha_representante
+        FOREIGN KEY (representante_id)
+        REFERENCES representante(id)
+        ON DELETE CASCADE
+);
