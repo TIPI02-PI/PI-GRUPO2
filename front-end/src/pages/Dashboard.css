@@ -1,0 +1,1313 @@
+
+/* ========================================
+   LUMIO — PLANEJAMENTO DE ROTAS
+======================================== */
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+
+  color: #0f172a;
+  background: #0e1c36;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  --lumio-navy: #0e1c36;
+  --lumio-dark: #1e293b;
+  --lumio-darkest: #0f172a;
+  --lumio-yellow: #eab308;
+  --lumio-yellow-hover: #ca8a04;
+  --lumio-text: #0f172a;
+  --lumio-muted: #64748b;
+  --lumio-soft: #94a3b8;
+  --lumio-border: #e2e8f0;
+  --lumio-surface: #ffffff;
+  --lumio-background: #f8fafc;
+}
+
+/* ========================================
+   RESET E CONFIGURAÇÕES GERAIS
+======================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--lumio-navy);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(234, 179, 8, 0.4);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ========================================
+   ESTRUTURA GERAL
+======================================== */
+
+.lumio-dashboard {
+  min-height: 100vh;
+  background: var(--lumio-navy);
+}
+
+.lumio-main {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 14px 24px 20px;
+}
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+.lumio-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--lumio-border);
+}
+
+.lumio-brand,
+.lumio-user {
+  display: flex;
+  align-items: center;
+}
+
+.lumio-brand {
+  gap: 12px;
+}
+
+.lumio-brand-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--lumio-yellow);
+  font-size: 23px;
+}
+
+.lumio-brand > div,
+.lumio-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lumio-brand strong {
+  color: var(--lumio-navy);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.lumio-brand small {
+  color: var(--lumio-muted);
+  font-size: 0.72rem;
+}
+
+.lumio-user {
+  gap: 11px;
+}
+
+.lumio-avatar {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--lumio-navy);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.lumio-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lumio-user-info strong {
+  color: var(--lumio-text);
+  font-size: 0.82rem;
+}
+
+.lumio-user-info small {
+  color: var(--lumio-muted);
+  font-size: 0.7rem;
+}
+
+.lumio-logout {
+  margin-left: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--lumio-border);
+  border-radius: 9px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.lumio-logout:hover {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* ========================================
+   BANNER PRINCIPAL
+======================================== */
+
+.lumio-hero {
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.lumio-hero > div {
+  max-width: 780px;
+}
+
+.lumio-hero-eyebrow {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: var(--lumio-yellow);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+}
+
+.lumio-hero h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+}
+
+.lumio-hero p {
+  max-width: 660px;
+  margin: 7px 0 0;
+  color: #cbd5e1;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.lumio-demo-badge {
+  flex-shrink: 0;
+  padding: 9px 12px;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  background: #fef9c3;
+  color: #713f12;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ========================================
+   GRID PRINCIPAL
+======================================== */
+
+.lumio-grid {
+  display: grid;
+  grid-template-columns: minmax(265px, 290px) minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.lumio-form-panel,
+.lumio-map-card,
+.lumio-sequence-card {
+  min-width: 0;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  background: var(--lumio-surface);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+.lumio-form-panel {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================================
+   TÍTULOS E CABEÇALHOS
+======================================== */
+
+.lumio-panel-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.lumio-badge {
+  display: inline-block;
+  padding: 6px 9px;
+  border: 1px solid #fde68a;
+  border-radius: 20px;
+  background: #fef9c3;
+  color: #713f12;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.45px;
+}
+
+.lumio-panel-heading h2,
+.lumio-card-heading h2,
+.lumio-section-heading h2 {
+  margin: 0;
+  color: var(--lumio-text);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.lumio-panel-heading p,
+.lumio-card-heading p,
+.lumio-section-heading p {
+  margin: 5px 0 0;
+  color: var(--lumio-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.lumio-section-heading {
+  margin-bottom: 9px;
+}
+
+/* ========================================
+   ALERTAS
+======================================== */
+
+.lumio-alert {
+  padding: 10px 12px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   FORMULÁRIO DE ENDEREÇOS
+======================================== */
+
+.lumio-address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.lumio-field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lumio-field > label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.lumio-field-number {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.lumio-field-number.partida {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.lumio-field-number.escola {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.lumio-address-row {
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.lumio-autocomplete {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.lumio-autocomplete input,
+.lumio-number-input {
+  width: 100%;
+  height: 38px;
+  min-width: 0;
+  padding: 0 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: var(--lumio-text);
+  font-size: 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s,
+    background 0.2s;
+}
+
+.lumio-autocomplete input::placeholder,
+.lumio-number-input::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.lumio-autocomplete input:focus,
+.lumio-number-input:focus {
+  border-color: var(--lumio-yellow);
+  outline: none;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.14);
+}
+
+.lumio-number-input {
+  width: 46px;
+  flex: 0 0 46px;
+  padding: 0 4px;
+  text-align: center;
+}
+
+.lumio-gps-button {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--lumio-border);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--lumio-navy);
+  font-size: 1.25rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lumio-gps-button:hover {
+  border-color: var(--lumio-yellow);
+  background: #fef9c3;
+}
+
+/* ========================================
+   SUGESTÕES DE ENDEREÇO
+======================================== */
+
+.lumio-suggestions {
+  position: absolute;
+  z-index: 2000;
+  top: calc(100% + 5px);
+  right: 0;
+  left: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--lumio-border);
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.14);
+}
+
+.lumio-suggestions button {
+  width: 100%;
+  padding: 10px 12px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  color: #334155;
+  text-align: left;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.lumio-suggestions button:last-child {
+  border-bottom: none;
+}
+
+.lumio-suggestions button:hover {
+  background: #fef9c3;
+}
+
+/* ========================================
+   BOTÕES DO FORMULÁRIO
+======================================== */
+
+.lumio-route-button {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 9px;
+  background: var(--lumio-yellow);
+  color: var(--lumio-darkest);
+  font-size: 0.8rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(234, 179, 8, 0.2);
+  transition: background 0.2s, transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.lumio-route-button:hover:not(:disabled) {
+  background: var(--lumio-yellow-hover);
+  box-shadow: 0 6px 15px rgba(234, 179, 8, 0.25);
+  transform: translateY(-1px);
+}
+
+.lumio-clear-button {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--lumio-border);
+  border-radius: 9px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.76rem;
+  font-weight: 600;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lumio-clear-button:hover {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+}
+
+.lumio-form-note {
+  margin: -2px 0 0;
+  color: #475569;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.lumio-form-note span {
+  margin-right: 5px;
+  color: var(--lumio-yellow-hover);
+}
+
+/* ========================================
+   ÁREA PRINCIPAL DIREITA
+======================================== */
+
+.lumio-main-content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================================
+   CARTÃO DO MAPA
+======================================== */
+
+.lumio-map-card {
+  padding: 13px;
+}
+
+.lumio-card-heading {
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lumio-location-button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--lumio-border);
+  border-radius: 9px;
+  background: #ffffff;
+  color: var(--lumio-navy);
+  font-size: 1.35rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lumio-location-button:hover {
+  border-color: var(--lumio-yellow);
+  background: #fef9c3;
+}
+
+.lumio-map-container {
+  position: relative;
+  height: clamp(180px, 25vh, 240px);
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--lumio-border);
+  border-radius: 11px;
+  background: #e2e8f0;
+}
+
+.lumio-map {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.lumio-map .leaflet-control-zoom {
+  overflow: hidden;
+  border: none;
+  border-radius: 9px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.lumio-map .leaflet-control-zoom a {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  color: var(--lumio-navy);
+}
+
+.lumio-map-legend {
+  padding: 9px 2px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: #475569;
+  font-size: 0.7rem;
+}
+
+.lumio-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lumio-map-legend small {
+  margin-left: auto;
+  color: #64748b;
+  font-size: 0.66rem;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.legend-van {
+  background: var(--lumio-navy);
+}
+
+.legend-stop {
+  background: var(--lumio-yellow);
+}
+
+/* ========================================
+   MARCADORES DO LEAFLET
+======================================== */
+
+.lumio-van-icon,
+.lumio-stop-icon {
+  border: none;
+  background: transparent;
+}
+
+.van-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  font-size: 24px;
+  filter: drop-shadow(0 2px 3px rgba(15, 23, 42, 0.25));
+}
+
+.van-pin span {
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: var(--lumio-navy);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.stop-pin {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: var(--lumio-yellow);
+  color: var(--lumio-darkest);
+  font-size: 0.8rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.3);
+}
+
+/* ========================================
+   MÉTRICAS DO PERCURSO
+======================================== */
+
+.lumio-metrics-section {
+  min-width: 0;
+}
+
+.lumio-section-heading h2 {
+  color: #ffffff;
+  font-size: 1.05rem;
+}
+
+.lumio-section-heading p {
+  color: #e2e8f0;
+}
+
+.lumio-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.lumio-metrics > div {
+  min-width: 0;
+  min-height: 78px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.lumio-metrics > div:hover {
+  border-color: var(--lumio-yellow);
+  transform: translateY(-2px);
+}
+
+.lumio-metrics > div > span {
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.lumio-metrics > div > strong {
+  color: #0e1c36;
+  font-size: clamp(0.8rem, 1vw, 1.05rem);
+  font-weight: 800;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.lumio-metrics .lumio-metric-featured {
+  border-color: #334155;
+  background: #1e293b;
+}
+
+.lumio-metrics .lumio-metric-featured > span,
+.lumio-metrics .lumio-metric-featured > small {
+  color: #f1f5f9;
+}
+
+.lumio-metrics .lumio-metric-featured > strong {
+  color: #facc15;
+  font-size: 1.1rem;
+}
+
+.lumio-metric-featured small {
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+
+/* ========================================
+   SEQUÊNCIA DE PARADAS
+======================================== */
+
+.lumio-sequence-card {
+  padding: 13px;
+}
+
+.lumio-empty {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.lumio-timeline {
+  position: relative;
+  margin: 0;
+  padding: 5px 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  list-style: none;
+}
+
+.lumio-timeline li {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  padding: 0 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+}
+
+.lumio-timeline li::before {
+  position: absolute;
+  z-index: 0;
+  top: 14px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #cbd5e1;
+  content: "";
+}
+
+.lumio-timeline li:first-child::before {
+  left: 50%;
+  width: 50%;
+}
+
+.lumio-timeline li:last-child::before {
+  width: 50%;
+}
+
+.lumio-timeline li > span {
+  position: relative;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: var(--lumio-dark);
+  color: #ffffff;
+  font-size: 0.73rem;
+  font-weight: 800;
+  box-shadow: 0 0 0 1px #cbd5e1;
+}
+
+.lumio-timeline li:first-child > span {
+  background: var(--lumio-yellow);
+  color: var(--lumio-darkest);
+}
+
+.lumio-timeline li > div {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lumio-timeline li strong {
+  color: #0f172a;
+  font-size: 0.73rem;
+  overflow-wrap: anywhere;
+}
+
+.lumio-timeline li small {
+  color: #334155;
+  font-size: 0.65rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   NOTEBOOKS COM POUCA ALTURA
+======================================== */
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .lumio-main {
+    padding-top: 9px;
+    padding-bottom: 12px;
+  }
+
+  .lumio-hero {
+    margin-bottom: 9px;
+  }
+
+  .lumio-hero-eyebrow {
+    margin-bottom: 4px;
+  }
+
+  .lumio-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .lumio-hero p {
+    margin-top: 4px;
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .lumio-grid {
+    gap: 12px;
+  }
+
+  .lumio-form-panel {
+    padding: 11px;
+    gap: 9px;
+  }
+
+  .lumio-panel-heading {
+    gap: 5px;
+  }
+
+  .lumio-panel-heading p {
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  .lumio-address-list {
+    gap: 7px;
+  }
+
+  .lumio-field {
+    gap: 4px;
+  }
+
+  .lumio-field-number {
+    width: 22px;
+    height: 22px;
+  }
+
+  .lumio-autocomplete input,
+  .lumio-number-input,
+  .lumio-gps-button {
+    height: 34px;
+  }
+
+  .lumio-route-button {
+    min-height: 36px;
+    padding: 7px;
+  }
+
+  .lumio-clear-button {
+    padding: 7px;
+  }
+
+  .lumio-main-content {
+    gap: 9px;
+  }
+
+  .lumio-map-card,
+  .lumio-sequence-card {
+    padding: 10px;
+  }
+
+  .lumio-map-container {
+    height: 180px;
+  }
+
+  .lumio-map-legend {
+    padding-top: 7px;
+  }
+
+  .lumio-metrics > div {
+    min-height: 68px;
+    padding: 7px;
+    gap: 4px;
+  }
+
+  .lumio-metrics > div > span {
+    font-size: 0.67rem;
+  }
+
+  .lumio-metrics > div > strong {
+    font-size: 0.85rem;
+  }
+
+  .lumio-metrics .lumio-metric-featured > strong {
+    font-size: 1rem;
+  }
+
+  .lumio-metric-featured small {
+    font-size: 0.6rem;
+  }
+
+  .lumio-section-heading {
+    margin-bottom: 6px;
+  }
+
+  .lumio-timeline li > span {
+    width: 26px;
+    height: 26px;
+  }
+
+  .lumio-timeline li::before {
+    top: 12px;
+  }
+
+  .lumio-timeline li strong {
+    font-size: 0.67rem;
+  }
+
+  .lumio-timeline li small {
+    font-size: 0.6rem;
+  }
+}
+
+/* ========================================
+   TELAS MÉDIAS
+======================================== */
+
+@media (max-width: 1200px) {
+  .lumio-main {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .lumio-grid {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .lumio-form-panel {
+    padding: 13px;
+  }
+
+  .lumio-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lumio-map-container {
+    height: clamp(190px, 25vh, 230px);
+  }
+}
+
+/* ========================================
+   TABLETS
+======================================== */
+
+@media (max-width: 900px) {
+  .lumio-main {
+    padding: 18px;
+  }
+
+  .lumio-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .lumio-form-panel {
+    order: 1;
+  }
+
+  .lumio-main-content {
+    order: 2;
+  }
+
+  .lumio-hero {
+    align-items: flex-start;
+  }
+
+  .lumio-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .lumio-map-container {
+    height: 300px;
+  }
+
+  .lumio-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+
+@media (max-width: 600px) {
+  .lumio-header {
+    height: 60px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .lumio-brand {
+    gap: 8px;
+  }
+
+  .lumio-brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 19px;
+  }
+
+  .lumio-brand strong {
+    font-size: 1.05rem;
+  }
+
+  .lumio-brand small {
+    font-size: 0.63rem;
+  }
+
+  .lumio-user {
+    gap: 7px;
+  }
+
+  .lumio-avatar {
+    width: 31px;
+    height: 31px;
+  }
+
+  .lumio-user-info {
+    display: none;
+  }
+
+  .lumio-logout {
+    margin-left: 0;
+    padding: 7px 9px;
+    font-size: 0.72rem;
+  }
+
+  .lumio-main {
+    padding: 16px 12px 22px;
+  }
+
+  .lumio-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .lumio-hero h1 {
+    font-size: 1.55rem;
+  }
+
+  .lumio-hero p {
+    font-size: 0.8rem;
+  }
+
+  .lumio-demo-badge {
+    padding: 8px 10px;
+    font-size: 0.68rem;
+  }
+
+  .lumio-form-panel,
+  .lumio-map-card,
+  .lumio-sequence-card {
+    padding: 13px;
+    border-radius: 12px;
+  }
+
+  .lumio-map-container {
+    height: 260px;
+  }
+
+  .lumio-map-legend {
+    gap: 9px;
+  }
+
+  .lumio-map-legend small {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .lumio-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lumio-metrics > div {
+    min-height: 78px;
+    padding: 10px;
+  }
+
+  .lumio-metrics .lumio-metric-featured {
+    grid-column: span 2;
+  }
+
+  .lumio-timeline {
+    flex-direction: column;
+    gap: 0;
+    padding-top: 4px;
+  }
+
+  .lumio-timeline li {
+    width: 100%;
+    min-height: 58px;
+    flex: none;
+    padding: 0 0 15px;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .lumio-timeline li::before,
+  .lumio-timeline li:first-child::before,
+  .lumio-timeline li:last-child::before {
+    top: 29px;
+    bottom: 0;
+    left: 14px;
+    width: 2px;
+    height: auto;
+  }
+
+  .lumio-timeline li:last-child::before {
+    display: none;
+  }
+
+  .lumio-timeline li > span {
+    width: 29px;
+    height: 29px;
+  }
+
+  .lumio-timeline li > div {
+    padding-top: 3px;
+  }
+
+  .lumio-timeline li strong {
+    font-size: 0.78rem;
+  }
+
+  .lumio-timeline li small {
+    font-size: 0.7rem;
+  }
+}
+
+/* ========================================
+   CELULARES PEQUENOS
+======================================== */
+
+@media (max-width: 380px) {
+  .lumio-header {
+    padding: 0 8px;
+  }
+
+  .lumio-brand {
+    gap: 6px;
+  }
+
+  .lumio-brand small {
+    display: none;
+  }
+
+  .lumio-brand strong {
+    font-size: 0.98rem;
+  }
+
+  .lumio-main {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .lumio-form-panel,
+  .lumio-map-card,
+  .lumio-sequence-card {
+    padding: 11px;
+  }
+
+  .lumio-address-row {
+    gap: 4px;
+  }
+
+  .lumio-number-input {
+    width: 40px;
+    flex-basis: 40px;
+  }
+
+  .lumio-gps-button {
+    width: 34px;
+  }
+
+  .lumio-autocomplete input {
+    padding: 0 7px;
+    font-size: 0.68rem;
+  }
+
+  .lumio-metrics > div > span {
+    font-size: 0.68rem;
+  }
+
+  .lumio-metrics > div > strong {
+    font-size: 0.85rem;
+  }
+}
