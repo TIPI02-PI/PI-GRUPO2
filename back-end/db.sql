@@ -570,12 +570,3 @@ ALTER TABLE enderecos ADD COLUMN logradouro VARCHAR(255) AFTER cep;
 
 
 select * from representante;
-
-
-CREATE TABLE van_escola (
-    van_id INT NOT NULL,
-    escola_id INT NOT NULL,
-    PRIMARY KEY (van_id, escola_id),
-    FOREIGN KEY (van_id) REFERENCES van(id) ON DELETE CASCADE,
-    FOREIGN KEY (escola_id) REFERENCES escola(id) ON DELETE CASCADE
-);
