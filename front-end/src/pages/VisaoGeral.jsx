@@ -1,30 +1,86 @@
-import styles from './VisaoGeral.module.css';
+import { useNavigate } from "react-router-dom";
+import styles from "./VisaoGeral.module.css";
 
 export default function VisaoGeral() {
+  const navigate = useNavigate();
+
+  const filaAnalise = [
+    {
+      id: 1,
+      titulo: "CNH Motorista - Carlos Eduardo",
+      meta: "Enviado há 15 min • Documentação",
+      rota: "/documentos",
+      docId: 1,
+    },
+    {
+      id: 2,
+      titulo: "Cadastro Van 04 - Lucas Oliveira",
+      meta: "Enviado há 40 min • Frota",
+      rota: "/motoristas",
+    },
+    {
+      id: 3,
+      titulo: "Ocorrência #OC-208 - Atraso matinal",
+      meta: "Aberta há 18 min • Denúncias",
+      rota: "/denuncias",
+    },
+  ];
+
+  const acessosRapidos = [
+    { titulo: "Validar documentos", desc: "4 pendentes", rota: "/documentos" },
+    { titulo: "Gerenciar usuários", desc: "Responsáveis e alunos", rota: "/usuarios" },
+    { titulo: "Frota e motoristas", desc: "12 vans cadastradas", rota: "/motoristas" },
+    { titulo: "Acompanhar mapa", desc: "10 vans em rota", rota: "/monitoramento" },
+  ];
+
   return (
     <div className={styles.container}>
-      {/* Cabeçalho */}
       <div className={styles.pageHeader}>
         <div className={styles.headerTitles}>
           <h1 className={styles.pageTitle}>Visão geral</h1>
           <p className={styles.pageSubtitle}>Resumo operacional da plataforma Lumio</p>
         </div>
-        <button className={styles.primaryActionBtn}>
-          + Novo registro
+        <button
+          className={styles.primaryActionBtn}
+          onClick={() => navigate("/monitoramento")}
+        >
+          Ver mapa ao vivo
         </button>
       </div>
 
-      {/* 4 KPIs */}
+      {/* KPIs clicáveis */}
       <section className={styles.kpiGrid}>
-        <div className={styles.kpiCard}>
+        <div className={styles.kpiCard} onClick={() => navigate("/motoristas")} style={{ cursor: "pointer" }}>
           <div className={styles.kpiHeader}>
             <span className={styles.kpiLabel}>Vans ativas</span>
-            <span className={styles.kpiIcon}>🚐</span>
           </div>
           <strong className={styles.kpiValue}>24</strong>
-          <span className={styles.kpiTrend}>+2 esta semana</span>
+          <span className={styles.kpiTrend}>Ver frota →</span>
         </div>
-        {/* Repita os outros 3 cards aqui */}
+
+        <div className={styles.kpiCard} onClick={() => navigate("/usuarios")} style={{ cursor: "pointer" }}>
+          <div className={styles.kpiHeader}>
+            <span className={styles.kpiLabel}>Usuários ativos</span>
+          </div>
+          <strong className={styles.kpiValue}>318</strong>
+          <span className={styles.kpiTrend}>Gerenciar perfis →</span>
+        </div>
+
+        <div className={styles.kpiCard} onClick={() => navigate("/documentos")} style={{ cursor: "pointer" }}>
+          <div className={styles.kpiHeader}>
+            <span className={styles.kpiLabel}>Docs pendentes</span>
+          </div>
+          <strong className={styles.kpiValue}>04</strong>
+          <span className={styles.kpiTrend}>Ir para fila →</span>
+        </div>
+
+        <div className={styles.kpiCard} onClick={() => navigate("/suporte")} style={{ cursor: "pointer" }}>
+          <div className={styles.kpiHeader}>
+            <span className={styles.kpiLabel}>Chamados abertos</span>
+          </div>
+          <strong className={styles.kpiValue}>04</strong>
+          <span className={styles.kpiTrend}>Abrir suporte →</span>
+        </div>
       </section>
 
       {/* Fila de Análise + Acesso Rápido */}
@@ -38,16 +94,23 @@ export default function VisaoGeral() {
           </div>
 
           <div className={styles.queueList}>
-            <div className={styles.queueItem}>
-              <div className={styles.queueItemInfo}>
-                <span className={styles.queueIndicator} />
-                <div>
-                  <p className={styles.queueItemTitle}>CNH Motorista - Carlos Eduardo</p>
-                  <span className={styles.queueItemMeta}>Enviado há 15 min • Documentação</span>
+            {filaAnalise.map((item) => (
+              <div key={item.id} className={styles.queueItem}>
+                <div className={styles.queueItemInfo}>
+                  <span className={styles.queueIndicator} />
+                  <div>
+                    <p className={styles.queueItemTitle}>{item.titulo}</p>
+                    <span className={styles.queueItemMeta}>{item.meta}</span>
+                  </div>
                 </div>
+                <button
+                  className={styles.queueActionBtn}
+                  onClick={() => navigate(item.rota, { state: { selectedId: item.docId } })}
+                >
+                  Analisar
+                </button>
               </div>
-              <button className={styles.queueActionBtn}>Analisar</button>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -60,32 +123,21 @@ export default function VisaoGeral() {
           </div>
 
           <div className={styles.quickAccessList}>
-            <button className={styles.quickAccessItem}>
-              <div className={styles.quickAccessLeft}>
-                <span className={styles.quickAccessIcon}>📄</span>
-                <div>
-                  <p className={styles.quickAccessTitle}>Validar documentos</p>
-                  <span className={styles.quickAccessDesc}>4 pendentes</span>
+            {acessosRapidos.map((acesso) => (
+              <button
+                key={acesso.rota}
+                className={styles.quickAccessItem}
+                onClick={() => navigate(acesso.rota)}
+              >
+                <div className={styles.quickAccessLeft}>
+                  <div>
+                    <p className={styles.quickAccessTitle}>{acesso.titulo}</p>
+                    <span className={styles.quickAccessDesc}>{acesso.desc}</span>
+                  </div>
                 </div>
-              </div>
-              <span>→</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Atividades Recentes */}
-      <section className={styles.panelCard}>
-        <div className={styles.panelHeader}>
-          <h2 className={styles.panelTitle}>Atividades recentes</h2>
-        </div>
-        <div className={styles.activitiesList}>
-          <div className={styles.activityRow}>
-            <div className={styles.activityLeft}>
-              <span className={styles.activityDot} />
-              <span className={styles.activityText}>Documento aprovado para Van 02</span>
-            </div>
-            <span className={styles.activityTime}>Há 10 min</span>
+                <span>→</span>
+              </button>
+            ))}
           </div>
         </div>
       </section>

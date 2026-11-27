@@ -1,21 +1,25 @@
-import { useState } from 'react';
-import styles from './Configuracoes.module.css';
+import { useState } from "react";
+import styles from "./Configuracoes.module.css";
 
 export default function Configuracoes() {
-  const [secaoAtiva, setSecaoAtiva] = useState('Segurança');
+  const [secaoAtiva, setSecaoAtiva] = useState("Segurança");
+  const [salvoMsg, setSalvoMsg] = useState("Última atualização: hoje às 15:40");
 
   return (
     <div className={styles.container}>
-      {/* Cabeçalho */}
       <div className={styles.pageHeader}>
         <div className={styles.headerTitles}>
           <h1 className={styles.pageTitle}>Configurações e segurança</h1>
           <p className={styles.pageSubtitle}>Políticas de acesso, permissões e parâmetros do sistema</p>
         </div>
-        <button className={styles.primaryDarkBtn}>Exportar logs</button>
+        <button
+          className={styles.primaryDarkBtn}
+          onClick={() => setSecaoAtiva("Auditoria")}
+        >
+          Ver logs de auditoria
+        </button>
       </div>
 
-      {/* Banner de Alerta */}
       <div className={styles.alertBanner}>
         <div className={styles.alertLeft}>
           <span className={styles.alertIcon}>!</span>
@@ -26,20 +30,25 @@ export default function Configuracoes() {
             </p>
           </div>
         </div>
-        <button className={styles.alertActionBtn}>Ver histórico</button>
+        <button
+          className={styles.alertActionBtn}
+          onClick={() => setSecaoAtiva("Auditoria")}
+        >
+          Ver histórico
+        </button>
       </div>
 
-      {/* Área Dividida */}
       <div className={styles.settingsGrid}>
-        {/* Menu Lateral Interno */}
         <aside className={styles.panelCard}>
           <nav className={styles.navMenu}>
             <span className={styles.navMenuHeader}>Categorias</span>
-            {['Geral', 'Segurança', 'Notificações', 'Integrações', 'Auditoria'].map((item) => (
+            {["Geral", "Segurança", "Notificações", "Integrações", "Auditoria"].map((item) => (
               <button
                 key={item}
                 onClick={() => setSecaoAtiva(item)}
-                className={`${styles.navItem} ${secaoAtiva === item ? styles.navItemActive : ''}`}
+                className={`${styles.navItem} ${
+                  secaoAtiva === item ? styles.navItemActive : ""
+                }`}
               >
                 {item}
               </button>
@@ -47,11 +56,10 @@ export default function Configuracoes() {
           </nav>
         </aside>
 
-        {/* Formulário de Políticas */}
         <section className={styles.panelCard}>
           <div className={styles.panelHeader}>
-            <h2 className={styles.panelTitle}>Políticas de segurança</h2>
-            <p className={styles.panelSubtitle}>Gerencie autenticação e proteção de sessão</p>
+            <h2 className={styles.panelTitle}>Políticas de {secaoAtiva.toLowerCase()}</h2>
+            <p className={styles.panelSubtitle}>Gerencie autenticação, alertas e proteção de sessão</p>
           </div>
 
           <div className={styles.settingsList}>
@@ -83,7 +91,7 @@ export default function Configuracoes() {
                 <p className={styles.settingDesc}>Registrar IP e horário em aprovações de documentos e bloqueios</p>
               </div>
               <label className={styles.switch}>
-                <input type="checkbox" />
+                <input type="checkbox" defaultChecked />
                 <span className={styles.slider} />
               </label>
             </div>
@@ -101,8 +109,13 @@ export default function Configuracoes() {
           </div>
 
           <div className={styles.panelFooter}>
-            <span className={styles.footerNote}>Última atualização: hoje às 15:40</span>
-            <button className={styles.saveAmberBtn}>Salvar alterações</button>
+            <span className={styles.footerNote}>{salvoMsg}</span>
+            <button
+              className={styles.saveAmberBtn}
+              onClick={() => setSalvoMsg("✓ Alterações salvas com sucesso!")}
+            >
+              Salvar alterações
+            </button>
           </div>
         </section>
       </div>

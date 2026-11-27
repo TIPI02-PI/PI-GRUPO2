@@ -1,9 +1,79 @@
-import { useState } from 'react';
-import styles from './Suporte.module.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Suporte.module.css";
+
+const TICKETS_INICIAIS = [
+  {
+    id: 1042,
+    iniciais: "AL",
+    nome: "Ana Luiza",
+    perfil: "Responsável",
+    hora: "14:20",
+    assunto: "Alteração de ponto de embarque",
+    status: "Em atendimento",
+    nota: "O motorista Carlos Eduardo será notificado automaticamente após a alteração da rota.",
+    mensagens: [
+      { autor: "usuario", texto: "Olá! Preciso atualizar o endereço de embarque do meu filho para amanhã.", hora: "14:20" },
+      { autor: "admin", texto: "Olá, Ana! Já localizei o cadastro da Van 01. Qual será o novo endereço?", hora: "14:22" },
+    ],
+  },
+  {
+    id: 1041,
+    iniciais: "CE",
+    nome: "Carlos Eduardo",
+    perfil: "Motorista • Van 01",
+    hora: "11:05",
+    assunto: "Atualização de CNH no sistema",
+    status: "Em atendimento",
+    nota: "Documento anexado na fila de validação administrativa.",
+    mensagens: [
+      { autor: "usuario", texto: "Bom dia! Acabei de enviar a foto da minha CNH renovada.", hora: "11:05" },
+    ],
+  },
+];
 
 export default function Suporte() {
-  const [ticketAtivo, setTicketAtivo] = useState(1);
-  const [mensagem, setMensagem] = useState('');
+  const navigate = useNavigate();
+  const [tickets, setTickets] = useState(TICKETS_INICIAIS);
+  const [ticketAtivoId, setTicketAtivoId] = useState(1042);
+  const [novaMensagem, setNovaMensagem] = useState("");
+  const [busca, setBusca] = useState("");
+
+  const ticketAtual = tickets.find((t) => t.id === ticketAtivoId) || tickets[0];
+
+  const handleEnviar = (e) => {
+    e.preventDefault();
+    if (!novaMensagem.trim()) return;
+
+    setTickets((prev) =>
+      prev.map((t) =>
+        t.id === ticketAtual.id
+          ? {
+              ...t,
+              mensagens: [
+                ...t.mensagens,
+                { autor: "admin", texto: novaMensagem, hora: "Agora" },
+              ],
+            }
+          : t
+      )
+    );
+    setNovaMensagem("");
+  };
+
+  const marcarResolvido = () => {
+    setTickets((prev) =>
+      prev.map((t) =>
+        t.id === ticketAtual.id ? { ...t, status: "Resolvido" } : t
+      )
+    );
+  };
+
+  const ticketsFiltrados = tickets.filter(
+    (t) =>
+      t.nome.toLowerCase().includes(busca.toLowerCase()) ||
+      t.assunto.toLowerCase().includes(busca.toLowerCase())
+  );
 
   return (
     <div className={styles.container}>
@@ -13,7 +83,12 @@ export default function Suporte() {
           <h1 className={styles.pageTitle}>Central de suporte</h1>
           <p className={styles.pageSubtitle}>Atendimento a responsáveis, motoristas e escolas</p>
         </div>
-        <button className={styles.primaryDarkBtn}>+ Novo chamado</button>
+        <button
+          className={styles.primaryDarkBtn}
+          onClick={() => navigate("/usuarios")}
+        >
+          Consultar usuários
+        </button>
       </div>
 
       {/* Área Dividida */}
@@ -22,31 +97,49 @@ export default function Suporte() {
         <aside className={styles.inboxPanel}>
           <div className={styles.inboxHeader}>
             <h2 className={styles.inboxTitle}>Caixa de entrada</h2>
-            <span className={styles.inboxBadge}>4 abertos</span>
+            <span className={styles.inboxBadge}>{tickets.length} chamados</span>
           </div>
 
           <input
             type="text"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
             placeholder="Buscar chamado ou usuário..."
             className={styles.searchInput}
           />
 
           <div className={styles.ticketList}>
-            <div
-              onClick={() => setTicketAtivo(1)}
-              className={`${styles.ticketCard} ${ticketAtivo === 1 ? styles.ticketCardActive : ''}`}
-            >
-              <div className={styles.ticketTop}>
-                <div className={styles.ticketUser}>
-                  <span className={styles.ticketAvatar}>AL</span>
-                  <span>Ana Luiza</span>
+            {ticketsFiltrados.map((ticket) => {
+              const ultimaMsg = ticket.mensagens[ticket.mensagens.length - 1]?.texto || "";
+              return (
+                <div
+                  key={ticket.id}
+                  onClick={() => setTicketAtivoId(ticket.id)}
+                  className={`${styles.ticketCard} ${
+                    ticketAtual.id === ticket.id ? styles.ticketCardActive : ""
+                  }`}
+                >
+                  <div className={styles.ticketTop}>
+                    <div className={styles.ticketUser}>
+                      <span className={styles.ticketAvatar}>{ticket.iniciais}</span>
+                      <span>{ticket.nome}</span>
+                    </div>
+                    <span className={styles.ticketTime}>{ticket.hora}</span>
+                  </div>
+                  <p className={styles.ticketSubject}>{ticket.assunto}</p>
+                  <p className={styles.ticketPreview}>{ultimaMsg}</p>
+                  <span
+                    className={`${styles.statusTag} ${
+                      ticket.status === "Resolvido"
+                        ? styles.statusResolved
+                        : styles.statusOpen
+                    }`}
+                  >
+                    {ticket.status}
+                  </span>
                 </div>
-                <span className={styles.ticketTime}>14:20</span>
-              </div>
-              <p className={styles.ticketSubject}>Alteração de ponto de embarque</p>
-              <p className={styles.ticketPreview}>Preciso atualizar o endereço de busca para amanhã...</p>
-              <span className={`${styles.statusTag} ${styles.statusOpen}`}>Em atendimento</span>
-            </div>
+              );
+            })}
           </div>
         </aside>
 
@@ -54,47 +147,57 @@ export default function Suporte() {
         <section className={styles.chatPanel}>
           <div className={styles.chatHeader}>
             <div className={styles.chatUserInfo}>
-              <div className={styles.chatAvatar}>AL</div>
+              <div className={styles.chatAvatar}>{ticketAtual.iniciais}</div>
               <div>
-                <h3 className={styles.chatTitle}>Alteração de ponto de embarque</h3>
-                <p className={styles.chatMeta}>Chamado #1042 • Ana Luiza (Responsável)</p>
+                <h3 className={styles.chatTitle}>{ticketAtual.assunto}</h3>
+                <p className={styles.chatMeta}>
+                  Chamado #{ticketAtual.id} • {ticketAtual.nome} ({ticketAtual.perfil})
+                </p>
               </div>
             </div>
-            <button className={styles.resolveBtn}>Marcar como resolvido</button>
+            <button className={styles.resolveBtn} onClick={marcarResolvido}>
+              {ticketAtual.status === "Resolvido" ? "✓ Resolvido" : "Marcar como resolvido"}
+            </button>
           </div>
 
           <div className={styles.messagesArea}>
-            <div className={`${styles.messageGroup} ${styles.messageIncoming}`}>
-              <div className={`${styles.bubble} ${styles.bubbleIncoming}`}>
-                Olá! Preciso atualizar o endereço de embarque do meu filho para amanhã.
+            {ticketAtual.mensagens.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`${styles.messageGroup} ${
+                  msg.autor === "admin"
+                    ? styles.messageOutgoing
+                    : styles.messageIncoming
+                }`}
+              >
+                <div
+                  className={`${styles.bubble} ${
+                    msg.autor === "admin"
+                      ? styles.bubbleOutgoing
+                      : styles.bubbleIncoming
+                  }`}
+                >
+                  {msg.texto}
+                </div>
+                <span className={styles.messageTime}>
+                  {msg.autor === "admin" ? "Suporte Lumio" : ticketAtual.nome} • {msg.hora}
+                </span>
               </div>
-              <span className={styles.messageTime}>Ana Luiza • 14:20</span>
-            </div>
+            ))}
 
-            <div className={`${styles.messageGroup} ${styles.messageOutgoing}`}>
-              <div className={`${styles.bubble} ${styles.bubbleOutgoing}`}>
-                Olá, Ana! Já localizei o cadastro da Van 02. Qual será o novo endereço?
+            {ticketAtual.nota && (
+              <div className={styles.systemNote}>
+                <span className={styles.systemNoteTitle}>Nota operacional</span>
+                <span>{ticketAtual.nota}</span>
               </div>
-              <span className={styles.messageTime}>Suporte Lumio • 14:22</span>
-            </div>
-
-            <div className={styles.systemNote}>
-              <span className={styles.systemNoteTitle}>Nota operacional</span>
-              <span>O motorista Carlos Eduardo será notificado automaticamente após a alteração da rota.</span>
-            </div>
+            )}
           </div>
 
-          <form
-            className={styles.chatInputBar}
-            onSubmit={(e) => {
-              e.preventDefault();
-              setMensagem('');
-            }}
-          >
+          <form className={styles.chatInputBar} onSubmit={handleEnviar}>
             <input
               type="text"
-              value={mensagem}
-              onChange={(e) => setMensagem(e.target.value)}
+              value={novaMensagem}
+              onChange={(e) => setNovaMensagem(e.target.value)}
               placeholder="Escreva sua resposta..."
               className={styles.messageInput}
             />
